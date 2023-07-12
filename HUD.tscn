@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=3 uid="uid://dkn70h38ilj37"]
+
+[ext_resource type="Script" path="res://HUD.gd" id="1_le555"]
+[ext_resource type="FontFile" uid="uid://chw126u277e4h" path="res://fonts/Xolonium-Regular.ttf" id="2_tk4ey"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_2c8fb"]
+action = &"start_game"
+
+[sub_resource type="Shortcut" id="Shortcut_8rafq"]
+events = [SubResource("InputEventAction_2c8fb")]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_le555")
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -240.0
+offset_top = -140.0
+offset_right = 240.0
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_tk4ey")
+theme_override_font_sizes/font_size = 64
+shortcut = SubResource("Shortcut_8rafq")
+text = "Start"
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -22.5
+offset_right = 22.5
+offset_bottom = 81.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_tk4ey")
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Message" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -240.0
+offset_right = 240.0
+offset_bottom = 243.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_tk4ey")
+theme_override_font_sizes/font_size = 64
+text = "Dodge the creeps!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="DifficultySlider" type="HSlider" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -211.0
+offset_top = 137.0
+offset_right = 212.0
+offset_bottom = 164.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "Difficulty"
+min_value = 1.0
+max_value = 5.0
+value = 3.0
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
+[connection signal="drag_ended" from="DifficultySlider" to="." method="_on_difficulty_slider_drag_ended"]
