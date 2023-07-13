@@ -1,6 +1,7 @@
 extends Node
 
 @export var mob_scene: PackedScene
+@export var feeder_scene: PackedScene
 var score
 
 # Called when the node enters the scene tree for the first time.
@@ -13,6 +14,7 @@ func _process(delta):
 	pass
 	
 var difficulty = 3 #default is 3 (out of 1-5)
+var counter = 0
 
 func game_over():
 	$ScoreTimer.stop()
@@ -41,8 +43,13 @@ func _on_start_timer_timeout():
 	$ScoreTimer.start()
 
 func _on_mob_timer_timeout():
-	# Create a new instance of the Mob scene.
-	var mob = mob_scene.instantiate()
+	# Create a new instance of either Mob or feeder scene.
+	var mob
+	if counter % 2 == 0:
+		mob = mob_scene.instantiate()
+	else:
+		mob = feeder_scene.instantiate()
+	counter += 1
 
 	# Choose a random location on Path2D.
 	var mob_spawn_location = get_node("MobPath/MobSpawnLocation")
