@@ -32,6 +32,7 @@ func new_game():
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
 	get_tree().call_group("mobs", "queue_free")
+	get_tree().call_group("feeders", "queue_free")
 	$Music.play()
 
 func _on_score_timer_timeout():
