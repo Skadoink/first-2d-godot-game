@@ -48,8 +48,11 @@ func start(pos):
 	$CollisionShape2D.disabled = false
 
 func _on_body_entered(body):
-	print(body.name)
-	hide() #player disappears after being hit.
-	hit.emit()
-	#Must be deferred as we can't change physics properties on a physics calback.
-	$CollisionShape2D.set_deferred("disabled", true)
+	if body.is_in_group("mobs"):
+		hide() #player disappears after being hit.
+		hit.emit()
+		#Must be deferred as we can't change physics properties on a physics calback.
+		$CollisionShape2D.set_deferred("disabled", true)
+	elif body.is_in_group("feeders"):
+		eat.emit()
+		body.queue_free()
